@@ -3,8 +3,6 @@ package com.sibi.pomodoro.roomdb.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Update
-import com.sibi.pomodoro.roomdb.entities.History
 import com.sibi.pomodoro.roomdb.entities.Task
 
 @Dao
@@ -22,10 +20,4 @@ interface TaskDAO {
     @Query("update todo set is_completed = 1 where id = :id")
     fun markComplete(vararg id: Int)
 
-    //for history of tasks user saved
-    @Query("select * from history")
-    fun getHistory(): List<History>
-
-    @Insert
-    fun addHistory(vararg history: History)
 }

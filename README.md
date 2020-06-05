@@ -1,2 +1,6 @@
 # pomodoro
-An android app built using kotlin for managing time using pomodoro technique. 
+An android app built using kotlin implementing Pomodoro technique
+Kotlin concepts used:
+1.Coroutines
+2.Lambdas
+3.late intialization
