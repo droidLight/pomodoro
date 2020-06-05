@@ -8,9 +8,4 @@
         android:id="@+id/completed_page"
         android:icon="@drawable/ic_launcher_foreground"
         android:title="@string/completed_tasks" />
-    <item
-        android:id="@+id/history_page"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="@string/tasks_history" />
-
 </menu>

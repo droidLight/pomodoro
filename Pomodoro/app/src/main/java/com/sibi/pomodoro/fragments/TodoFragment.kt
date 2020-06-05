@@ -1,5 +1,6 @@
 package com.sibi.pomodoro.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,20 +13,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.sibi.pomodoro.R
+import com.sibi.pomodoro.TimerActivity
 import com.sibi.pomodoro.dialog.TaskDialog
 import com.sibi.pomodoro.recyclerviewadapter.TaskAdapter
 import com.sibi.pomodoro.roomdb.AppDatabase
 import com.sibi.pomodoro.roomdb.entities.Task
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 
-class TodoFragment : Fragment(), View.OnClickListener, TaskDialog.TaskDialogListener {
+class TodoFragment : Fragment(), View.OnClickListener, TaskDialog.TaskDialogListener{
 
     var taskAdapter: TaskAdapter? = null
     var dialogFrag: TaskDialog? = null
@@ -37,7 +36,6 @@ class TodoFragment : Fragment(), View.OnClickListener, TaskDialog.TaskDialogList
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        println("TODO Frag")
         val view: View = inflater.inflate(R.layout.fragment_todo, container, false)
 
         //datbase object
@@ -54,8 +52,10 @@ class TodoFragment : Fragment(), View.OnClickListener, TaskDialog.TaskDialogList
         dialogFrag = TaskDialog()
         dialogFrag?.setTargetFragment(this, TODO_FRAG_REQ_CODE)
 
+        //recycler adapter, callback implmented using lambda function
+        taskAdapter = TaskAdapter{item -> completedBtnClicked(item)}
+
         //recycler view applying adapter and layout manager
-        taskAdapter = TaskAdapter()
         recyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = taskAdapter
@@ -67,13 +67,25 @@ class TodoFragment : Fragment(), View.OnClickListener, TaskDialog.TaskDialogList
         return view
     }
 
+    //callback listener from completed button in each task implemented using lambda function
+    fun completedBtnClicked(taskId: Int){
+        println("TASK ID: $taskId")
+        CoroutineScope(IO).launch {
+            db!!.dao().markComplete(taskId)
+        }
+        //to update list
+        readData()
+    }
 
     //listener for add btn and timer btn
     override fun onClick(v: View?) {
         if (v?.id == R.id.add_btn) {
             activity?.supportFragmentManager?.let { dialogFrag?.show(it, "task-dialog") }
         }
+        if(v?.id == R.id.timer_btn){
+            activity?.startActivity(Intent(this.activity, TimerActivity::class.java))
 
+        }
     }
 
     //listener for positive btn in task dialog

@@ -4,8 +4,11 @@
     <string name="completed_tasks">Completed Tasks</string>
     <string name="tasks_history">History</string>
     <string name="add_task"> Add Task</string>
-    <string name="start_timer">Start Timer</string>
+    <string name="start_timer">Timer</string>
     <string name="mark_as_completed">Completed</string>
     <string name="add">Add</string>
     <string name="cancel">Cancel</string>
+    <string name="start">Start</string>
+    <string name="reset">Reset</string>
+    <string name="time_up">Time is up!</string>
 </resources>

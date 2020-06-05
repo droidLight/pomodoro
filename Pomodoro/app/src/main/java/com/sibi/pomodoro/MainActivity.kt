@@ -1,20 +1,10 @@
 package com.sibi.pomodoro
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.sibi.pomodoro.dialog.TaskDialog
 import com.sibi.pomodoro.fragments.CompletedTasks
-import com.sibi.pomodoro.fragments.History
 import com.sibi.pomodoro.fragments.TodoFragment
-import com.sibi.pomodoro.roomdb.AppDatabase
-import com.sibi.pomodoro.roomdb.entities.Task
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(){
 
@@ -43,12 +33,6 @@ class MainActivity : AppCompatActivity(){
                     val completedPage = CompletedTasks()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.container, completedPage, "completed_frag").commit()
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.history_page -> {
-                    val completedPage = History()
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, completedPage, "history_frag").commit()
                     return@OnNavigationItemSelectedListener true
                 }
             }

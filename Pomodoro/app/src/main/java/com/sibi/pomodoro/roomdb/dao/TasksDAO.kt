@@ -19,8 +19,8 @@ interface TaskDAO {
     @Insert
     fun addTodo(vararg todo: Task)
 
-    @Update
-    fun markComplete(vararg todo: Task)
+    @Query("update todo set is_completed = 1 where id = :id")
+    fun markComplete(vararg id: Int)
 
     //for history of tasks user saved
     @Query("select * from history")
